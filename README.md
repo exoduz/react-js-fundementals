@@ -3,7 +3,7 @@
 
 ## Section 1 - Intro to the React Ecosystem ##
 
-### Lecture 2 - Video ###
+### Video ###
 **Imperative:** Telling your program how to do something  
 ```javascript
 var numbers = [4, 2, 3, 6];
@@ -20,3 +20,7 @@ numbers.reduce(function(previous, current) {
 	return previous + current;
 });
 ```
+
+## Section 2 - Pure Functions. f(d)=v. Props and Nesting Components. ##
+
+### Nested Components and Props ###
