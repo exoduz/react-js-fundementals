@@ -65,7 +65,7 @@ var HelloUser = React.createClass({
 ReactDOM.render(<HelloUser name="Tyler"/>, document.getElementById('app')); //passing name attribute
 ```
 
-```jsx
+```javascript
 //Passing attribute to a child component
 var FriendsContainer = React.createClass({
   render: function(){
