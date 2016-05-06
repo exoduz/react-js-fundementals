@@ -26,7 +26,6 @@ numbers.reduce(function(previous, current) {
 ## Section 2 - Setting up your first React component with NPM, Babel and Webpack ##
 
 ### First React Component ###
-
 ```javascript
 var React = require('react')
 var ReactDOM = require('react-dom')
@@ -51,3 +50,50 @@ Manipulating actual **DOM** is slow, React is able to minimise manipulations to 
 ## Section 3 - Pure Functions. f(d)=v. Props and Nesting Components. ##
 
 ### Nested Components and Props ###
+**Props** is a simple system for passing data from one component to another child component.
+
+
+```javascript
+//Basic example of props
+var HelloUser = React.createClass({
+  render: function(){
+    return (
+      <div> Hello, {this.props.name}</div>
+    )
+  }
+});
+ReactDOM.render(<HelloUser name="Tyler"/>, document.getElementById('app')); //passing name attribute
+```
+
+```jsx
+//Passing attribute to a child component
+var FriendsContainer = React.createClass({
+  render: function(){
+    var name = 'Tyler McGinnis'
+    var friends = ['Ean Platter', 'Murphy Randall', 'Merrick Christensen']
+    return (
+      <div>
+        <h3> Name: {name} </h3>
+        <ShowList names={friends} />
+      </div>
+    )
+  }
+});
+
+//Child component
+var ShowList = React.createClass({
+  render: function(){
+    var listItems = this.props.names.map(function(friend){
+      return <li> {friend} </li>;
+    });
+    return (
+      <div>
+        <h3> Friends </h3>
+        <ul>
+          {listItems}
+        </ul>
+      </div>
+    )
+  }
+});
+```
