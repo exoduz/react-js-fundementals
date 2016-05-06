@@ -26,7 +26,8 @@ numbers.reduce(function(previous, current) {
 ## Section 2 - Setting up your first React component with NPM, Babel and Webpack ##
 
 ### First React Component ###
-```javascript
+
+```jsx
 var React = require('react')
 var ReactDOM = require('react-dom')
 var HelloWorld = React.createClass({
@@ -53,7 +54,7 @@ Manipulating actual **DOM** is slow, React is able to minimise manipulations to 
 **Props** is a simple system for passing data from one component to another child component.
 
 
-```javascript
+```jsx
 //Basic example of props
 var HelloUser = React.createClass({
   render: function(){
@@ -65,7 +66,7 @@ var HelloUser = React.createClass({
 ReactDOM.render(<HelloUser name="Tyler"/>, document.getElementById('app')); //passing name attribute
 ```
 
-```javascript
+```jsx
 //Passing attribute to a child component
 var FriendsContainer = React.createClass({
   render: function(){
