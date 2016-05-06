@@ -4,6 +4,7 @@
 ## Section 1 - Intro to the React Ecosystem ##
 
 ### Video ###
+
 **Imperative:** Telling your program how to do something
 
 ```javascript
@@ -23,21 +24,22 @@ numbers.reduce(function(previous, current) {
 });
 ```
 
+
 ## Section 2 - Setting up your first React component with NPM, Babel and Webpack ##
 
 ### First React Component ###
 
-```jsx
+```javascript
 var React = require('react')
 var ReactDOM = require('react-dom')
 var HelloWorld = React.createClass({
-  render: function(){
-    return (
-      <div>
-        Hello World!
-      </div>
-    )
-  }
+	render: function() {
+		return (
+			<div>
+				Hello World!
+			</div>
+		)
+	}
 });
 ReactDOM.render(<HelloWorld />, document.getElementById('app'));
 ```
@@ -48,53 +50,94 @@ ReactDOM.render(<HelloWorld />, document.getElementById('app'));
 
 Manipulating actual **DOM** is slow, React is able to minimise manipulations to the actual **DOM** by keeping track of a **virtual DOM** and only updating the real **DOM** when necessary.
 
+
 ## Section 3 - Pure Functions. f(d)=v. Props and Nesting Components. ##
 
 ### Nested Components and Props ###
+
 **Props** is a simple system for passing data from one component to another child component.
 
-
-```jsx
+```javascript
 //Basic example of props
 var HelloUser = React.createClass({
-  render: function(){
-    return (
-      <div> Hello, {this.props.name}</div>
-    )
-  }
+	render: function() {
+		return (
+			<div> Hello, { this.props.name }</div>
+		)
+	}
 });
-ReactDOM.render(<HelloUser name="Tyler"/>, document.getElementById('app')); //passing name attribute
+ReactDOM.render(<HelloUser name="Tyler" />, document.getElementById('app')); //passing name attribute
 ```
 
-```jsx
+```javascript
 //Passing attribute to a child component
 var FriendsContainer = React.createClass({
-  render: function(){
-    var name = 'Tyler McGinnis'
-    var friends = ['Ean Platter', 'Murphy Randall', 'Merrick Christensen']
-    return (
-      <div>
-        <h3> Name: {name} </h3>
-        <ShowList names={friends} />
-      </div>
-    )
-  }
+	render: function() {
+		var name = 'Tyler McGinnis';
+		var friends = ['Ean Platter', 'Murphy Randall', 'Merrick Christensen'];
+		
+		return (
+			<div>
+				<h3> Name: { name } </h3>
+				<ShowList names={ friends } />
+			</div>
+		)
+	}
 });
 
 //Child component
 var ShowList = React.createClass({
-  render: function(){
-    var listItems = this.props.names.map(function(friend){
-      return <li> {friend} </li>;
-    });
-    return (
-      <div>
-        <h3> Friends </h3>
-        <ul>
-          {listItems}
-        </ul>
-      </div>
-    )
-  }
+	render: function() {
+		//array.map !important
+		var listItems = this.props.names.map(function(friend){
+			return <li> { friend } </li>;
+		});
+    
+		return (
+			<div>
+				<h3> Friends </h3>
+				<ul>
+					{ listItems }
+				</ul>
+			</div>
+		)
+	}
 });
 ```
+
+
+### Building UIs with Pure FUnctions and Function Composition ###
+
+`f(d)=V` A **Function** takes in some **Data** and returns a **View**
+
+**Pure Functions**
+
+- Pure functions always return the same result given the same arguments.
+- Pure fucntion's execution doesn't depend on the state of the application.
+- Pure functions don't modify the variables outside of their scope.
+
+```javascript
+//.slice is a pure function
+var friends = ['Ryan', 'Michael', 'Dan'];
+friends.slice(0, 1); // 'Ryan'
+friends.slice(0, 1); // 'Ryan'
+friends.slice(0, 1); // 'Ryan'
+
+//.splice is not a pure function
+var friends = ['Ryan', 'Michael', 'Dan'];
+friends.splice(0, 1); // ["Ryan"]
+friends.splice(0, 1); // ["Michael"]
+friends.splice(0, 1); // ["Dan"]
+```
+
+
+## Section 4 - this.props.children and getting started with React Router ##
+
+### `this.props.children` ###
+
+`this.props.children` is a method to access specific data between opening and closing elements.
+
+
+## Section 5 - Container vs Presentational Components, PropTypes, and Stateless Functional Components ##
+
+### Stateless Functional Components ###
