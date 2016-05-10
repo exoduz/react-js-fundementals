@@ -141,3 +141,52 @@ friends.splice(0, 1); // ["Dan"]
 ## Section 5 - Container vs Presentational Components, PropTypes, and Stateless Functional Components ##
 
 ### Stateless Functional Components ###
+
+```javascript
+//Components using a normal function
+var HelloWorld = React.createClass({
+	render: function() {
+		return (
+			<div>Hello { this.props.name }</div>
+		);
+	}
+});
+ReactDom.render(<HelloWorld name='Robin' />, document.getElementById('app'));
+
+//Components using a stateless function
+function HelloWorld(props) {
+	return (
+		<div>Hello { props.name }</div>
+	)
+}
+ReactDOM.render(<HelloWorld name='Robin' />, document.getElementById('app'));
+```
+
+Stateless functions don't support `shouldComponentUpdate`.
+
+
+### PropTypes ###
+
+**PropTypes** is used for type checking properties that are passed into your components.
+
+```javascript
+<Icon
+	name='fontawesome|facebook-square' 
+	size={ 70 } 
+	color='#3b5998'
+	style={ styles.facebook } />
+
+//implementing the above PropTypes
+var Icon = React.createClass({
+	propTypes: {
+		name: PropTypes.string.isRequired,
+		size: PropTypes.number.isRequired, //if string rather than integer, then console error
+		color: PropTypes.string.isRequired,
+		style: PropTypes.object
+	},
+	render: { ... }
+});
+```
+
+`propTypes.func` not ~~`propTypes.function`~~ because `function` is a **reserved word**  
+`propTypes.bool` not ~~`propTypes.boolean`~~ because `function` is a **reserved word**
