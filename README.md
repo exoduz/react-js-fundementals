@@ -29,7 +29,7 @@ numbers.reduce(function(previous, current) {
 
 ### First React Component ###
 
-```javascript
+```jsx
 var React = require('react')
 var ReactDOM = require('react-dom')
 var HelloWorld = React.createClass({
@@ -57,7 +57,7 @@ Manipulating actual **DOM** is slow, React is able to minimise manipulations to 
 
 **Props** is a simple system for passing data from one component to another child component.
 
-```javascript
+```jsx
 //Basic example of props
 var HelloUser = React.createClass({
 	render: function() {
@@ -69,7 +69,7 @@ var HelloUser = React.createClass({
 ReactDOM.render(<HelloUser name="Tyler" />, document.getElementById('app')); //passing name attribute
 ```
 
-```javascript
+```jsx
 //Passing attribute to a child component
 var FriendsContainer = React.createClass({
 	render: function() {
@@ -142,7 +142,7 @@ friends.splice(0, 1); // ["Dan"]
 
 ### Stateless Functional Components ###
 
-```javascript
+```jsx
 //Components using a normal function
 var HelloWorld = React.createClass({
 	render: function() {
@@ -169,7 +169,7 @@ Stateless functions don't support `shouldComponentUpdate`.
 
 **PropTypes** is used for type checking properties that are passed into your components.
 
-```javascript
+```jsx
 <Icon
 	name='fontawesome|facebook-square' 
 	size={ 70 } 
@@ -190,3 +190,338 @@ var Icon = React.createClass({
 
 `propTypes.func` not ~~`propTypes.function`~~ because `function` is a **reserved word**  
 `propTypes.bool` not ~~`propTypes.boolean`~~ because `boolean` is a **reserved word**
+
+
+## Section 6 - Life Cycle Events ##
+
+### Life Cycle Events ###
+
+**Lifecycle methods** are methods each component can have that allow us to hook into the views when specific conditions happen (i.e. when the component first renders, or when the component gets updated with new data, etc.)
+
+**React's Lifecycle Methods**
+
+1. When a component gets mounted to the DOM and unmounted
+2. When a component receives new data
+
+#### Mounting / Unmounting ####
+
+**Mounting** is when a component is initialized and added to the DOM.  
+**Unmounting** is when a component is removed from the DOM.  
+Both these only happens once during the life of the component.
+
+##### Establish some default props in our component #####
+
+Use `getDefaultProps` method.
+
+```jsx
+var Loading = React.createClass({
+	getDefaultProps: function() {
+		return {
+			text: 'Loading'
+		};
+	},
+	render: function() { ... } //access 'Loading' by this.props.text
+});
+```
+
+##### Set some initial state in our component #####
+
+Use `getInitialState` method.
+
+```jsx
+var Login = React.createClass({
+	getInitialState: function() {
+		return {
+			email: '',
+			password: ''
+		};
+	},
+	render: function() { ... }
+});
+```
+
+Use `this.setState` to pass in a new object which overwrites the original properties.
+
+##### Make an Ajax request to fetch some data needed for this component #####
+
+Use `componentDidMount` method. Called right after the component is mounted to the DOM.
+
+```jsx
+var FriendsList = React.createClass({
+	componentDidMount: function() {
+		return Axios.get(this.props.url).then(this.props.callback); //using Axios (https://github.com/mzabriskie/axios)
+	},
+	render: function() { ... }
+});
+```
+
+##### Set up any listeners (i.e. Websockets or Firebase listeners) #####
+
+Use `componentDidMount` method.
+
+```jsx
+var FriendsList = React.createClass({
+	componentDidMount: function() {
+		ref.on('value', function(snapshot) {
+			this.setState({
+				friends: snapshot.val()
+			});
+		})
+	},
+	render: function() { ... }
+});
+```
+
+##### Remove any listeners initially set up (when unmounted) #####
+
+Use `componentWillUnmount` method.
+
+```jsx
+var FriendsList = React.createClass({
+	componentWillUnmount: function() {
+		ref.off();
+	},
+	render: function() { ... }
+});
+```
+
+![React Lifecycle](http://robinjulius.com/wp-content/uploads/2016/05/React-Lifecycle-1024x835.png)
+
+
+## Section 7 - The `this` keyword ##
+
+### The `this` keyword ###
+
+`this` allows us to reuse functions with different context.
+
+- Implicit Binding
+- Explicit Binding
+- `new` Binding
+- window Binding
+
+When is `this` function invoked?
+
+#### Implicit Binding (Look left of the dot at Call Time) ####
+
+```jsx
+var me = {
+	name: 'Robin',
+	age: 35,
+	sayName: function() {
+		console.log(this.name); //Robin
+	}
+};
+me.sayName(); //look left of the dot (i.e. me)
+
+
+var sayNameMixin = function(obj) {
+	obj.sayName = function(0 {
+		console.log(this.name);
+	}
+};
+
+var me2 = {
+	name: 'Robin',
+	age: 35,
+};
+
+var you2 = {
+	name: 'James',
+	age: 21,
+};
+
+sayNameMixin(me2); //passes 'me' object
+sayNameMixin(you2); //passes 'you' object
+
+me2.sayName(); //Robin (look left of the dot (i.e. me2))
+you2.sayName(); //James (look left of the dot (i.e. you2))
+
+
+var Person = function(name, age) {
+	return {
+		name: name,
+		age: age,
+		sayName: function() {
+			console.log(this.name);
+		},
+		mother {
+			name: 'Lily',
+			sayName: function() {
+				console.log(this.name);
+			},
+		}
+	}
+}
+
+var jim = Person('Jim', 42);
+jim.sayName(); //Jim (look left of the dot (i.e. jim))
+jim.mother.sayName(); //Lily (look left of the dot (i.e. jim.mother))
+```
+
+#### Explicit Binding (call, apply, bind) ####
+
+`call()` invokes function/method, but does not create a copy like `bind()`, instead it executes the function  
+1st parameter is what this should point to, the rest is the parameters you would pass to the function
+
+`apply()` same as `call()` but wants an array as parameters
+
+`bind()` creates a copy of the function, and takes what should be this as the 1st parameter  
+Also allows you to set default parameters, the 2nd parameter of `bind()` is the 1st parameter of the function it is bound to, 3rd parameter is 2nd, etc...
+
+```javascript
+var sayName = function(lang1, lang2) {
+	console.log('My name is ' + this.name + ' and I know ' + lang1 + ', ' + lang2); 
+}
+
+var me = {
+	name: 'Lily',
+	age: 56
+};
+
+var languages = ['Javascript', 'PHP'];
+
+sayName.call('stacey', languages[0], languages[1]);
+sayName.apply('stacey', languages);
+var newFn = sayName.bind('stacey', languages[0], languages[1]); //returns new function instead of invoking
+newFn();
+```
+
+#### `New` Binding (call, apply, bind) and Window Binding ####
+
+```javascript
+//New Binding
+var Animal = function(color, name, type) {
+	//this = {}
+	this.color = color;
+	this.name = name;
+	this.type = type;
+}
+
+var zebra = new Animal('black and white', 'Zorro', 'Zebra');
+```
+
+```javascript
+//Window Binding
+var sayAge = function() {
+	console.log(this.age);
+}
+
+var me = {
+	age: 35
+}
+
+sayAge(); //undefined
+window.age = 35;
+sayAge(); //35
+```
+
+
+## Section 9 - More Container vs Presentational Components ##
+
+### `.reduce` ###
+
+```javascript
+var scores = [89, 76, 47, 95];
+var initialValue = 0;
+var reducer = function (accumulator, item) {
+	return accumulator + item;
+}
+var total = scores.reduce(reducer, initialValue);
+var average = total / scores.length;
+```
+
+The very first time the `reducer` function is called, it's going to be passed the `initialValue` you gave it (the 2nd argument to `.reduce`) and the first item in the actual array. So in our example above the first time that our `reducer` function runs, `accumulator` is going to be 0 and item is going to be 89. Remember, the goal is to transform an array into a single value. We currently have two numbers, 0 and 89, and are goal is to get that to one value. Because we're wanting to find the sum of every item in the array, we'll add 89 + 0 to get 89. That brings up a very important step. The thing that gets returned from the `reducer` function will then be passed as the `accumulator` the next time the function runs. So when `reducer` runs again, `accumulator` will be 89 and item will now be the second item in the array, 76. This pattern continues until we have no more items in the array and we get the summation of all of our `reducer` functions, which is 307.
+
+```javascript
+var votes = [
+	'tacos',
+	'pizza',
+	'pizza',
+	'tacos',
+	'fries',
+	'ice cream',
+	'ice cream',
+	'pizza'
+]
+var initialValue = {};
+var reducer = function(tally, vote) {
+	if (!tally[vote]) {
+		tally[vote] = 1;
+	} else {
+		tally[vote] = tally[vote] + 1;
+	}
+	return tally;
+}
+var result = votes.reduce(reducer, initialValue) // {tacos: 2, pizza: 3, fries: 1, ice cream: 2}
+```
+
+
+## Section 10 - Private Functional Stateless Components ##
+
+### Private Components ###
+
+```jsx
+var React = require('react');
+
+function FriendsList(props) {
+	return (
+		<h1>Friends:</h1>
+		<ul>
+			{ props.friends.map((friend, index) => {
+				return (
+					<li key={ friend }>{ friend }</li>
+				)
+			})}
+		</ul>
+	);
+}
+
+module.exports = FriendsList;
+```
+
+Rewrite above with a `private` component for modularity
+
+```jsx
+var React = require('react');
+
+function FriendItem(props) {
+	return (
+		<li>{ props.friend }</li>
+	);
+}
+
+function FriendsList(props) {
+	return (
+		<h1>Friends:</h1>
+		<ul>
+			{ prop.friends.map((friend, index) => <FriendItem friend={ friend } key={ Friend } />)}
+		</ul>
+	);
+}
+
+module.exports = FriendsList;
+```
+
+
+## Section 11 - Building a Highly Reusable React Component ##
+
+### `getDefaultProps` ###
+
+When creating a reusable `<Loading />` component, you want the user to specify their own styles and properties. But what is some users don't want to specify custom styles and properties? You use `getDefaultProps` to specify default props in a component.
+
+```jsx
+varLoading = React.createClass({
+	getDefaultProps: function() {
+		return {
+			text: 'loading',
+			styles: { color: 'red' }
+		}
+	},
+	render: function() { ... }
+});
+
+<Loading /> //default properties i.e. this.props.text = 'loading' and this.props.styles = { color: 'red' }
+
+<Loading text='One second' styles={ color: 'green' } /> //this.props.text = 'One second' and this.props.styles = { color: 'green' }
+```
+
