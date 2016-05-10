@@ -189,4 +189,4 @@ var Icon = React.createClass({
 ```
 
 `propTypes.func` not ~~`propTypes.function`~~ because `function` is a **reserved word**  
-`propTypes.bool` not ~~`propTypes.boolean`~~ because `function` is a **reserved word**
+`propTypes.bool` not ~~`propTypes.boolean`~~ because `boolean` is a **reserved word**
