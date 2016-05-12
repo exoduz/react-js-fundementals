@@ -137,6 +137,41 @@ friends.splice(0, 1); // ["Dan"]
 
 `this.props.children` is a method to access specific data between opening and closing elements.
 
+```jsx
+var Link = React.createClass({
+	changeURL: function() {
+		window.location.replace(this.props.href);
+	},
+	render: function() {
+		console.log(this.props.children);
+		return (
+			<span style={{ color: 'blue', cursor: 'pointer' }} onClick={ this.changeURL }>
+				{/*
+					Gets values in between the <Link> tags and adds them to an array to use
+					this.props.children[0] = this.props.username
+					this.props.children[1] = 'children2'
+					...
+				*/}
+				{ this.props.children } 
+			</span>
+		);
+	}
+});
+
+var ProfileLink = React.createClass({
+	render: function() {
+		return (
+			<div>
+				<Link href={ 'https://github.com/' + this.props.username }>
+					{ this.props.username } {/* Passed to Link component */}
+					children2
+					children3
+				</Link>
+			</div>
+		);
+	}
+});
+```
 
 ## Section 5 - Container vs Presentational Components, PropTypes, and Stateless Functional Components ##
 
