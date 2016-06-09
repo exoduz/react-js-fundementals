@@ -320,7 +320,7 @@ var FriendsList = React.createClass({
 });
 ```
 
-![React Lifecycle](http://robinjulius.com/wp-content/uploads/2016/05/React-Lifecycle-1024x835.png)
+![React Lifecycle](https://robinjulius.com/blog/wp-content/uploads/2016/05/React-Lifecycle-1024x835.png)
 
 
 ## Section 7 - The `this` keyword ##
