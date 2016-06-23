@@ -13,11 +13,11 @@
 	2. [PropTypes](#section-5-2)
 6. [Life Cycle Events](#section-6)
 7. [The `this` keyword](#section-7)
-8. [More Container vs Presentational Components](#section-9)
-	1. [`.reduce`](#section-9-1)
-9. [Private Functional Stateless Components](#section-10)
-10. [Building a Highly Reusable React Component](#section-11)
-	1. [`getDefaultProps`](#section-11-1)
+8. [More Container vs Presentational Components](#section-8)
+	1. [`.reduce`](#section-8-1)
+9. [Private Functional Stateless Components](#section-9)
+10. [Building a Highly Reusable React Component](#section-10)
+	1. [`getDefaultProps`](#section-10-1)
 
 <a id="section-1"></a>
 ## Section 1 - Intro to the React Ecosystem ##
@@ -512,7 +512,7 @@ var reducer = function(tally, vote) {
 var result = votes.reduce(reducer, initialValue) // {tacos: 2, pizza: 3, fries: 1, ice cream: 2}
 ```
 
-<a id="section-10"></a>
+<a id="section-9"></a>
 ## Section 10 - Private Functional Stateless Components ##
 
 ### Private Components ###
@@ -559,10 +559,10 @@ function FriendsList(props) {
 module.exports = FriendsList;
 ```
 
-<a id="section-11"></a>
+<a id="section-10"></a>
 ## Section 11 - Building a Highly Reusable React Component ##
 
-<a id="section-11-1"></a>
+<a id="section-10-1"></a>
 ### `getDefaultProps` ###
 
 When creating a reusable `<Loading />` component, you want the user to specify their own styles and properties. But what is some users don't want to specify custom styles and properties? You use `getDefaultProps` to specify default props in a component.
