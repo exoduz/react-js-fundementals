@@ -3,9 +3,7 @@
 
 ### Contents ###
 1. [Intro to the React Ecosystem](#section-1)
-	1. [Video](#section-1-1)
 2. [Setting up your first React component with NPM, Babel and Webpack](#section-2)
- 	1. [First React Component](#section-2-1)
 3. [Pure Functions. f(d)=v. Props and Nesting Components.](#section-3)
 	1. [Nested Components and Props](#section-3-1)
 	2. [Building UIs with Pure FUnctions and Function Composition](#section-3-2)
@@ -15,12 +13,13 @@
 	2. [PropTypes](#section-5-2)
 6. [Life Cycle Events](#section-6)
 7. [The `this` keyword](#section-7)
-9. [More Container vs Presentational Components](#section-9)
+8. [More Container vs Presentational Components](#section-9)
 	1. [`.reduce`](#section-9-1)
-10. [Private Functional Stateless Components](#section-10)
-11. [Building a Highly Reusable React Component](#section-11)
+9. [Private Functional Stateless Components](#section-10)
+10. [Building a Highly Reusable React Component](#section-11)
 	1. [`getDefaultProps`](#section-11-1)
 
+<a id="section-1"></a>
 ## Section 1 - Intro to the React Ecosystem ##
 
 ### Video ###
@@ -44,7 +43,7 @@ numbers.reduce(function(previous, current) {
 });
 ```
 
-
+<a id="section-2"></a>
 ## Section 2 - Setting up your first React component with NPM, Babel and Webpack ##
 
 ### First React Component ###
@@ -70,9 +69,10 @@ ReactDOM.render(<HelloWorld />, document.getElementById('app'));
 
 Manipulating actual **DOM** is slow, React is able to minimise manipulations to the actual **DOM** by keeping track of a **virtual DOM** and only updating the real **DOM** when necessary.
 
-
+<a id="section-3"></a>
 ## Section 3 - Pure Functions. f(d)=v. Props and Nesting Components. ##
 
+<a id="section-3-1"></a>
 ### Nested Components and Props ###
 
 **Props** is a simple system for passing data from one component to another child component.
@@ -125,7 +125,7 @@ var ShowList = React.createClass({
 });
 ```
 
-
+<a id="section-3-2"></a>
 ### Building UIs with Pure FUnctions and Function Composition ###
 
 `f(d)=V` A **Function** takes in some **Data** and returns a **View**
@@ -150,7 +150,7 @@ friends.splice(0, 1); // ["Michael"]
 friends.splice(0, 1); // ["Dan"]
 ```
 
-
+<a id="section-4"></a>
 ## Section 4 - this.props.children and getting started with React Router ##
 
 ### `this.props.children` ###
@@ -193,8 +193,9 @@ var ProfileLink = React.createClass({
 });
 ```
 
+<a id="section-5"></a>
 ## Section 5 - Container vs Presentational Components, PropTypes, and Stateless Functional Components ##
-
+<a id="section-5-1"></a>
 ### Stateless Functional Components ###
 
 ```jsx
@@ -219,7 +220,7 @@ ReactDOM.render(<HelloWorld name='Robin' />, document.getElementById('app'));
 
 Stateless functions don't support `shouldComponentUpdate`.
 
-
+<a id="section-5-2"></a>
 ### PropTypes ###
 
 **PropTypes** is used for type checking properties that are passed into your components.
@@ -246,7 +247,7 @@ var Icon = React.createClass({
 `propTypes.func` not ~~`propTypes.function`~~ because `function` is a **reserved word**  
 `propTypes.bool` not ~~`propTypes.boolean`~~ because `boolean` is a **reserved word**
 
-
+<a id="section-6"></a>
 ## Section 6 - Life Cycle Events ##
 
 ### Life Cycle Events ###
@@ -342,7 +343,7 @@ var FriendsList = React.createClass({
 
 ![React Lifecycle](https://robinjulius.com/blog/wp-content/uploads/2016/05/React-Lifecycle-1024x835.png)
 
-
+<a id="section-7"></a>
 ## Section 7 - The `this` keyword ##
 
 ### The `this` keyword ###
@@ -470,9 +471,10 @@ window.age = 35;
 sayAge(); //35
 ```
 
-
+<a id="section-8"></a>
 ## Section 9 - More Container vs Presentational Components ##
 
+<a id="section-8-1"></a>
 ### `.reduce` ###
 
 ```javascript
@@ -510,7 +512,7 @@ var reducer = function(tally, vote) {
 var result = votes.reduce(reducer, initialValue) // {tacos: 2, pizza: 3, fries: 1, ice cream: 2}
 ```
 
-
+<a id="section-10"></a>
 ## Section 10 - Private Functional Stateless Components ##
 
 ### Private Components ###
@@ -557,9 +559,10 @@ function FriendsList(props) {
 module.exports = FriendsList;
 ```
 
-
+<a id="section-11"></a>
 ## Section 11 - Building a Highly Reusable React Component ##
 
+<a id="section-11-1"></a>
 ### `getDefaultProps` ###
 
 When creating a reusable `<Loading />` component, you want the user to specify their own styles and properties. But what is some users don't want to specify custom styles and properties? You use `getDefaultProps` to specify default props in a component.
